@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/o/ozon-sdk-pro/ozon_sdk_pro-${{ version }}.tar.gz
-  sha256: REPLACE_WITH_PUBLISHED_SDIST_SHA256
+  sha256: 4707f81b6cfd96b201c99ab9d1954b81daa30c62ae7e0a64ed8d06e8315f3312
 
 build:
   number: 0
