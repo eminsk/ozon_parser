@@ -1,0 +1,134 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ozon-sdk-pro"
+version = "1.0.0"
+description = "All-in-One Ozon Sync/Async SDK, CLI, Native MCP Server, Free/Paid AI (g4f, Ollama, OpenAI, DeepSeek, OpenRouter) & optional CustomTkinter Desktop GUI ([gui]): Composer API extraction, Seller INN lookup, Ozon Card pricing, Search Rank Tracker, and Smart Reviews"
+readme = "README.md"
+authors = [
+    { name = "eminsk", email = "M_N_Nik@yahoo.com" },
+]
+license = { text = "MIT" }
+requires-python = ">=3.8"
+keywords = [
+    "ozon",
+    "ozon-parser",
+    "ozon-sdk",
+    "parser",
+    "scraper",
+    "sdk",
+    "e-commerce",
+    "marketplace",
+    "reviews",
+    "mcp",
+    "customtkinter",
+    "price-tracker",
+    "g4f",
+    "free-ai",
+    "openai",
+    "deepseek",
+    "openrouter",
+    "ollama",
+    "no-gil",
+    "pypy",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+    "Programming Language :: Python :: 3.16",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Topic :: Internet :: WWW/HTTP :: Indexing/Search",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "httpx[http2]>=0.27.0",
+    "openpyxl>=3.1.0",
+    "requests>=2.31.0",
+    "tomli>=2.0.0; python_version < '3.11'",
+]
+
+[project.optional-dependencies]
+ai = [
+    "g4f>=0.4.0",
+]
+free-ai = [
+    "g4f>=0.4.0",
+]
+tls = [
+    "curl-cffi>=0.7.0",
+]
+browser = [
+    "selenium>=4.15.0",
+    "selenium-stealth>=1.0.6",
+]
+gui = [
+    "customtkinter>=5.2.0",
+    "pillow>=10.0.0",
+    "curl-cffi>=0.7.0",
+]
+dataframe = [
+    "pandas>=2.0.0",
+]
+pandas = [
+    "pandas>=2.0.0",
+]
+all = [
+    "curl-cffi>=0.7.0",
+    "customtkinter>=5.2.0",
+    "pillow>=10.0.0",
+    "pandas>=2.0.0",
+    "g4f>=0.4.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+]
+
+[project.scripts]
+ozon-parser = "ozon_parser.cli:main"
+ozon-sdk = "ozon_parser.cli:main"
+ozon-gui = "ozon_parser.gui:main_gui"
+ozon-mcp = "ozon_parser.mcp_server:main_mcp"
+
+[project.urls]
+Homepage = "https://github.com/eminsk/ozon_parser"
+Documentation = "https://eminsk.github.io/"
+Repository = "https://github.com/eminsk/ozon_parser"
+Issues = "https://github.com/eminsk/ozon_parser/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ozon_parser"]
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+    "/.venv*",
+    "/dist*",
+    "/build*",
+    "/storage*",
+    "/result*",
+    "/output*",
+    "/*.db",
+    "/*.xlsx",
+    "/*.csv",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-v"

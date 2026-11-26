@@ -1,0 +1,9 @@
+python-ozon-sdk-pro (1.0.0-1) unstable; urgency=medium
+
+  * Initial Debian/Ubuntu APT release of Ozon SDK Pro (`ozon-sdk-pro` / `ozon_parser`).
+  * Pure-Python Sync/Async Ozon Composer SDK, Seller INN lookup, Ozon Card savings,
+    SQLite Price & Search Rank Trackers, Smart Review Analyzer + Hybrid Free/Paid AI
+    (`g4f`, Ollama, OpenAI, DeepSeek, OpenRouter, ProxyAPI, Groq), 13-command CLI,
+    and 9-tool Native MCP Server (`ozon-mcp`).
+
+ -- eminsk <M_N_Nik@yahoo.com>  Thu, 26 Nov 2026 00:45:00 +0000
