@@ -57,6 +57,7 @@ def _build_client(args: argparse.Namespace) -> OzonClient:
     return OzonClient(
         proxy=getattr(args, "proxy", None),
         proxy_change_url=getattr(args, "proxy_change_url", None),
+        mobileproxy_key=getattr(args, "mobileproxy_key", None),
         cookies=getattr(args, "cookies", None),
         user_agent=getattr(args, "user_agent", None),
         use_browser_fallback=bool(getattr(args, "browser", False)),
@@ -67,6 +68,7 @@ def _build_client(args: argparse.Namespace) -> OzonClient:
 def _add_network_args(subparser: argparse.ArgumentParser, *, db_default: Optional[str] = "ozon_prices.db") -> None:
     subparser.add_argument("--proxy", default=None, help="Proxy URL (http://user:pass@ip:port or socks5://...)")
     subparser.add_argument("--proxy-change-url", default=None, help="Mobile proxy IP rotation URL")
+    subparser.add_argument("--mobileproxy-key", default=None, help="MobileProxy.rent/space API rotation key")
     subparser.add_argument("--cookies", default=None, help="Browser Cookie header string for Ozon session")
     subparser.add_argument("--user-agent", default=None, help="Custom User-Agent override")
     subparser.add_argument("--browser", action="store_true", help="Enable optional [browser] Selenium fallback on anti-bot")
@@ -342,6 +344,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         srv = OzonMCPServer(
             proxy=args.proxy,
             proxy_change_url=args.proxy_change_url,
+            mobileproxy_key=args.mobileproxy_key,
             cookies=args.cookies,
             user_agent=args.user_agent,
             use_browser_fallback=args.browser,

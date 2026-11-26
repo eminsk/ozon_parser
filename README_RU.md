@@ -1,6 +1,9 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/assets/logo.png" width="140" alt="Ozon SDK Pro Logo">
+</p>
 <h1 align="center">Ozon SDK Pro (`ozon-sdk-pro`)</h1>
 <p align="center">
-  <b>Единая экосистема для Ozon: Sync/Async SDK + Composer API + ИНН продавца + Ozon Карта + Позиции (Rank) + Умные отзывы + Бесплатные/Платные AI (`g4f` / Ollama / OpenAI / DeepSeek / OpenRouter) + 13 команд CLI + 9 MCP-инструментов + 7-Tab GUI</b>
+  <b>Единая экосистема для Ozon: Sync/Async SDK + Автономное Windows .exe приложение + Composer API + ИНН продавца + Ozon Карта + Позиции (Rank) + Умные отзывы + Бесплатные/Платные AI (`g4f` / Ollama / OpenAI / DeepSeek / OpenRouter) + 13 команд CLI + 9 MCP-инструментов</b>
 </p>
 
 <p align="center">
@@ -8,7 +11,26 @@
   <b>🇷🇺 Документация на русском</b>
 </p>
 
-> Современная переработка и расширение проекта `ozonparser` по единому стандарту **`wb-sdk-pro` / `avito-sdk-pro`**: чистая публикуемая библиотека (`pip` / `uv add ozon-sdk-pro`, `import ozon_parser`), CLI (`ozon-parser` / `ozon-sdk`), Native MCP-сервер (`ozon-mcp`), 7-вкладочный Desktop GUI (`ozon-gui`), Debian APT PPA (`python3-ozon-sdk-pro`) и рецепт `conda-forge` v1 (`packaging/conda-forge/recipe.yaml`).
+[![Release](https://img.shields.io/badge/релиз-v1.1.0-005BFF.svg?style=flat&logo=github)](https://github.com/eminsk/ozon_parser/releases/tag/v1.1.0)
+[![Бесплатный тест прокси 3 часа](https://img.shields.io/badge/Прокси_без_VPN-Тест_3_часа_бесплатно-00C853?style=flat&logo=cloudflare&logoColor=white)](https://mobileproxy.rent/user.html?free&p=279117)
+[![PyPI Version](https://img.shields.io/pypi/v/ozon-sdk-pro.svg?style=flat&logo=pypi&color=005BFF)](https://pypi.org/project/ozon-sdk-pro/)
+[![Python Versions](https://img.shields.io/badge/python-3.8%20--%203.16+%20%7C%20PyPy%20%7C%20No--GIL-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
+[![Desktop GUI](https://img.shields.io/badge/Desktop%20GUI-Windows%20.exe%20%7C%207%20Вкладок-005BFF.svg?style=flat)](https://github.com/eminsk/ozon_parser/blob/main/README_RU.md#%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA-gui-%D0%B8-%D0%B0%D0%B2%D1%82%D0%BE%D0%BD%D0%BE%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE-windows-exe-ozon-gui)
+[![Telegram Канал](https://img.shields.io/badge/Telegram_Канал-@avito__sdk__pro-26A5E4?style=flat&logo=telegram&logoColor=white)](https://t.me/avito_sdk_pro)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat)](https://opensource.org/licenses/MIT)
+
+> Современная переработка и расширение проекта `ozonparser` по единому стандарту **`wb-sdk-pro` / `avito-sdk`**: чистая публикуемая библиотека (`pip` / `uv add ozon-sdk-pro`, `import ozon_parser`), CLI (`ozon-parser` / `ozon-sdk`), Native MCP-сервер (`ozon-mcp`), 7-вкладочный Desktop GUI (`ozon-gui`), **автономный Windows `.exe` (`OzonSDK_Pro.exe`)**, Debian APT PPA (`python3-ozon-sdk-pro`) и рецепт `conda-forge` v1 (`packaging/conda-forge/recipe.yaml`).
+
+> ### 🤝 Сообщество, мобильные прокси и поддержка
+> - 🌐 **Антибот Ozon или 429 при парсинге?** Возьмите [бесплатный тест мобильного прокси на 3 часа](https://mobileproxy.rent/user.html?free&p=279117) ([личный кабинет MobileProxy](https://mobileproxy.rent/?p=279117) — работает в РФ без VPN).
+> - 📢 **Релизы, настройка прокси и чат:** подписывайтесь на [Telegram-канал @avito_sdk_pro](https://t.me/avito_sdk_pro).
+> - 🐛 **Нашли баг или изменились виджеты Ozon?** [Откройте Issue](https://github.com/eminsk/ozon_parser/issues) — исправления выходят оперативно!
+> - ⭐ **Полезен проект?** Поставьте звезду репозиторию на GitHub!
+> - ☕ **Поддержать разработку (USDT TRC-20):** `TDVbEdnpgNgoAhNcn1EwXxWHiR3RKLit5P` ([Проверить в TronScan](https://tronscan.org/#/address/TDVbEdnpgNgoAhNcn1EwXxWHiR3RKLit5P))
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/docs/images/gui_parser.png" alt="Ozon SDK Pro Desktop GUI — Вкладка Парсер" width="820">
+</p>
 
 ---
 
@@ -121,15 +143,45 @@ ai = AIClient(mode="free", provider="g4f")
 print(ai.chat("Дай 3 совета по карточке товара на Ozon").content)
 ```
 
-### Запуск GUI (`ozon-gui`)
+### Запуск GUI и автономного Windows `.exe` (`ozon-gui`)
 
+#### 1. Готовое приложение для Windows (без установки Python):
+1. Скачайте **[OzonSDK_Pro_Windows_x64.zip](https://github.com/eminsk/ozon_parser/releases/latest)** из раздела [Releases](https://github.com/eminsk/ozon_parser/releases).
+2. Распакуйте архив и запустите `OzonSDK_Pro.exe` (внутри уже вшиты Chrome TLS `curl_cffi` и бесплатный AI `g4f`).
+
+#### 2. Или запуск через Python / PyPI:
 ```bash
-uv run ozon-gui
+uvx --from "ozon-sdk-pro[gui]" ozon-gui
 # или локально:
 uv run python run_gui.py
+# или двойным кликом по run_gui.bat
 ```
 
-Вкладки GUI: **🔍 Парсер**, **📦 Каталог товаров**, **📈 Позиции (Rank)**, **💬 Умные отзывы + AI** (с кнопкой **`⚡ Проверить AI`**, экспортом отзывов в `.xlsx` и отправкой в Telegram), **🌐 Прокси и Сессия** (включая **`🍪 Захватить Cookies`**), **✈️ Telegram**, **📋 Журнал**.
+Вкладки GUI: **🔍 Парсер**, **📦 Каталог товаров**, **📈 Позиции (Rank)**, **💬 Умные отзывы + AI** (с кнопкой **`⚡ Проверить AI`**, экспортом отзывов в `.xlsx` и отправкой в Telegram), **🌐 Прокси и Сессия** (включая **баннер MobileProxy + бесплатный 3ч тест** и **`🍪 Захватить Cookies`**), **✈️ Telegram**, **📋 Журнал** и кнопка **`☕ Донат`** в шапке окна.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/docs/images/gui_catalog.png" alt="Ozon SDK Pro Desktop GUI — Каталог товаров, Ozon Карта и ИНН" width="820">
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/docs/images/gui_reviews_ai.png" alt="Ozon SDK Pro Desktop GUI — Умные отзывы и бесплатный AI g4f" width="820">
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/docs/images/gui_proxy.png" alt="Ozon SDK Pro Desktop GUI — Прокси, MobileProxy и захват Cookies" width="820">
+</p>
+
+### Выбор и настройка сетевых прокси
+1. **Серверные (IPv4 / SOCKS5 — от 30–50 ₽/мес):** для лёгкого мониторинга совместно с cookies Chrome (`--cookies` / `[browser]`).
+2. **Оплата за трафик (Pay-As-You-Go — ~200 ₽/ГБ):** [AstroProxy](https://astroproxy.com), [Asocks](https://asocks.com).
+3. **Выделенные мобильные 4G/LTE модемы с ротацией (рекомендуется):** [MobileProxy (mobileproxy.rent)](https://mobileproxy.rent/?p=279117) ([бесплатный тест 3 часа без VPN](https://mobileproxy.rent/user.html?free&p=279117)):
+   ```python
+   from ozon_parser import OzonClient
+
+   with OzonClient(
+       proxy="http://login:password@proxy-domain.space:port",
+       mobileproxy_key="ВАШ_КЛЮЧ_РОТАЦИИ",
+   ) as ozon:
+       products = ozon.search("видеокарта rtx 4060", max_pages=2)
+   ```
 
 ### Команды CLI (`ozon-parser` / `ozon-sdk` — 13 команд)
 
@@ -161,6 +213,17 @@ uv run ozon-parser gui
 ```bash
 uv run --with pytest pytest -v
 ```
+
+**24 теста** пройдены в CI на **Linux, Windows и macOS** (CPython 3.8–3.16, Free-Threaded 3.13t–3.16t, PyPy 3.8–3.12).
+
+---
+
+## ☕ Поддержать проект (Донат)
+
+Если библиотека помогает в работе или экономит время разработки:
+* ⭐ Поставьте звезду на [GitHub](https://github.com/eminsk/ozon_parser)
+* 🌐 Воспользуйтесь партнёрской ссылкой: [MobileProxy — 3 часа бесплатно без VPN](https://mobileproxy.rent/user.html?free&p=279117)
+* 💎 **USDT (TRC-20):** `TDVbEdnpgNgoAhNcn1EwXxWHiR3RKLit5P` ([Проверить в TronScan](https://tronscan.org/#/address/TDVbEdnpgNgoAhNcn1EwXxWHiR3RKLit5P))
 
 ## 📄 Лицензия
 

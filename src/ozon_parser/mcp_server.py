@@ -170,14 +170,20 @@ class OzonMCPServer:
         *,
         proxy: Optional[str] = None,
         proxy_change_url: Optional[str] = None,
+        mobileproxy_key: Optional[str] = None,
         cookies: Optional[str] = None,
         user_agent: Optional[str] = None,
         use_browser_fallback: Optional[bool] = None,
         tracker_db: Optional[str] = None,
         client: Optional[OzonClient] = None,
     ) -> None:
+        from ozon_parser.config import resolve_proxy_change_url
+
         self.proxy = proxy or os.environ.get("OZON_PROXY")
-        self.proxy_change_url = proxy_change_url or os.environ.get("OZON_PROXY_CHANGE_URL")
+        self.proxy_change_url = resolve_proxy_change_url(
+            proxy_change_url or os.environ.get("OZON_PROXY_CHANGE_URL"),
+            mobileproxy_key or os.environ.get("OZON_MOBILEPROXY_KEY"),
+        )
         self.cookies = cookies or os.environ.get("OZON_COOKIES")
         self.user_agent = user_agent or os.environ.get("OZON_USER_AGENT")
         env_bf = (os.environ.get("OZON_BROWSER_FALLBACK") or "").strip().lower() in ("1", "true", "yes")

@@ -5,6 +5,7 @@ Configuration defaults, sort mappings, and settings loader for Ozon SDK Pro.
 from __future__ import annotations
 
 import json
+import urllib.parse
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
@@ -17,6 +18,36 @@ TELEGRAM_CHANNEL_URL = "https://t.me/avito_sdk_pro"
 DOCS_URL = "https://eminsk.github.io/"
 ISSUES_URL = "https://github.com/eminsk/ozon_parser/issues"
 REPO_URL = "https://github.com/eminsk/ozon_parser"
+
+MOBILEPROXY_REFERRAL_URL = "https://mobileproxy.rent/?p=279117"
+MOBILEPROXY_FREE_TRIAL_URL = "https://mobileproxy.rent/user.html?free&p=279117"
+MOBILEPROXY_CHANGEIP_BASE = "https://changeip.mobileproxy.space/"
+ASTROPROXY_URL = "https://astroproxy.com"
+ASOCKS_URL = "https://asocks.com"
+DONATE_USDT_TRC20 = "TDVbEdnpgNgoAhNcn1EwXxWHiR3RKLit5P"
+DONATE_TRONSCAN_URL = "https://tronscan.org/#/address/TDVbEdnpgNgoAhNcn1EwXxWHiR3RKLit5P"
+
+
+def resolve_proxy_change_url(
+    proxy_change_url: Optional[str] = None,
+    mobileproxy_key: Optional[str] = None,
+) -> Optional[str]:
+    """Normalize a full proxy rotation URL or expand a bare `mobileproxy_key`."""
+    raw = (proxy_change_url or "").strip()
+    if raw:
+        if "://" in raw:
+            return raw
+        mobileproxy_key = raw
+
+    key = (mobileproxy_key or "").strip()
+    if not key:
+        return None
+    if "://" in key:
+        return key
+    if "proxy_key=" in key:
+        qs = urllib.parse.parse_qs(urllib.parse.urlparse(key).query)
+        key = (qs.get("proxy_key") or [key])[0].strip()
+    return f"{MOBILEPROXY_CHANGEIP_BASE}?proxy_key={urllib.parse.quote(key)}&format=json"
 
 SORT_OPTIONS: Dict[str, str] = {
     "score": "score",
@@ -46,6 +77,7 @@ class OzonConfig:
     targets: List[str] = field(default_factory=list)
     proxy: Optional[str] = None
     proxy_change_url: Optional[str] = None
+    mobileproxy_key: Optional[str] = None
     cookies: Optional[str] = None
     user_agent: Optional[str] = None
     use_browser_fallback: bool = False

@@ -1,6 +1,9 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/assets/logo.png" width="140" alt="Ozon SDK Pro Logo">
+</p>
 <h1 align="center">Ozon SDK Pro (`ozon-sdk-pro`)</h1>
 <p align="center">
-  <b>All-in-One Ozon Sync/Async SDK + Composer API + Seller INN Lookup + Ozon Card + Rank Tracker + Smart Reviews + Free/Paid AI (g4f / Ollama / OpenAI / DeepSeek / OpenRouter) + 13 CLI Commands + 9 MCP Tools + 7-Tab GUI</b>
+  <b>All-in-One Ozon Sync/Async SDK + Standalone Windows .exe GUI + Composer API + Seller INN Lookup + Ozon Card + Rank Tracker + Smart Reviews + Free/Paid AI (g4f / Ollama / OpenAI / DeepSeek / OpenRouter) + 13 CLI Commands + 9 MCP Tools</b>
 </p>
 
 <p align="center">
@@ -8,14 +11,29 @@
   <a href="https://github.com/eminsk/ozon_parser/blob/main/README_RU.md">🇷🇺 Документация на русском</a>
 </p>
 
-[![PyPI Version](https://img.shields.io/badge/pypi-ozon--sdk--pro-005BFF.svg?style=flat&logo=pypi&logoColor=white)](https://pypi.org/project/ozon-sdk-pro/)
+[![Release](https://img.shields.io/badge/release-v1.1.0-005BFF.svg?style=flat&logo=github)](https://github.com/eminsk/ozon_parser/releases/tag/v1.1.0)
+[![Free 3h Proxy Trial](https://img.shields.io/badge/Mobile_Proxy-Free_3h_Trial_(No_VPN)-00C853?style=flat&logo=cloudflare&logoColor=white)](https://mobileproxy.rent/user.html?free&p=279117)
+[![PyPI Version](https://img.shields.io/pypi/v/ozon-sdk-pro.svg?style=flat&logo=pypi&color=005BFF)](https://pypi.org/project/ozon-sdk-pro/)
 [![Python Versions](https://img.shields.io/badge/python-3.8%20--%203.16+%20%7C%20PyPy%20%7C%20No--GIL-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![uv Powered](https://img.shields.io/badge/uv-package%20manager-DE5FE9.svg?style=flat)](https://github.com/astral-sh/uv)
-[![Desktop GUI](https://img.shields.io/badge/Desktop%20GUI-7%20Tabs%20%7C%20CustomTkinter-005BFF.svg?style=flat)](https://github.com/eminsk/ozon_parser#desktop-gui)
+[![Tests](https://img.shields.io/badge/pytest-24%20passed%20%C3%97%2018%20runtimes-2ea44f.svg?style=flat&logo=pytest&logoColor=white)](https://github.com/eminsk/ozon_parser/tree/main/tests)
+[![Desktop GUI](https://img.shields.io/badge/Desktop%20GUI-Windows%20.exe%20%7C%207%20Tabs-005BFF.svg?style=flat)](https://github.com/eminsk/ozon_parser#desktop-gui)
 [![MCP Server](https://img.shields.io/badge/MCP-9%20Tools%20JSON--RPC%202.0-00C853.svg?style=flat)](https://github.com/eminsk/ozon_parser#mcp-server-for-ai-agents)
+[![Telegram Channel](https://img.shields.io/badge/Telegram_Channel-@avito__sdk__pro-26A5E4?style=flat&logo=telegram&logoColor=white)](https://t.me/avito_sdk_pro)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat)](https://opensource.org/licenses/MIT)
 
-> **Unified Ozon Ecosystem (`ozon-sdk-pro` / `import ozon_parser`)** combining fast HTTP/Composer API v2 extraction, seller legal & INN lookups, buyer review harvesting & **Free/Paid AI summarization (`g4f`, Ollama, OpenAI, DeepSeek, OpenRouter, ProxyAPI, Groq, Gemini)**, Ozon Card savings math, SQLite price & search rank tracking, 13-command CLI (`ozon-parser` / `ozon-sdk`), 9-tool MCP Server (`ozon-mcp`), optional 7-tab CustomTkinter Desktop GUI (`ozon-gui`), Debian APT PPA packaging, and a ready-to-submit `conda-forge` v1 recipe.
+> **Unified Ozon Ecosystem (`ozon-sdk-pro` / `import ozon_parser`)** combining fast HTTP/Composer API v2 extraction, seller legal & INN lookups, buyer review harvesting & **Free/Paid AI summarization (`g4f`, Ollama, OpenAI, DeepSeek, OpenRouter, ProxyAPI, Groq, Gemini)**, Ozon Card savings math, SQLite price & search rank tracking, 13-command CLI (`ozon-parser` / `ozon-sdk`), 9-tool MCP Server (`ozon-mcp`), 7-tab CustomTkinter Desktop GUI (`ozon-gui`), **Standalone Windows `x64` `.exe` App (`OzonSDK_Pro.exe`)**, Debian APT PPA packaging, and a `conda-forge` v1 recipe.
+
+> ### 🤝 Community, Mobile Proxies & Support
+> - 🌐 **Hitting Ozon anti-bot challenges or 429 limits?** Claim a [3-Hour Free Mobile Proxy Trial](https://mobileproxy.rent/user.html?free&p=279117) ([MobileProxy Portal](https://mobileproxy.rent/?p=279117) — works in Russia without VPN).
+> - 📢 **Releases, proxy setups & community chat:** Join our [Telegram Channel (@avito_sdk_pro)](https://t.me/avito_sdk_pro).
+> - 🐛 **Found a bug or composer widget layout change?** Please [Open an Issue](https://github.com/eminsk/ozon_parser/issues) — parser fixes are prioritized!
+> - ⭐ **Find this SDK useful?** Give it a star on GitHub — it helps more developers discover the library!
+> - ☕ **Support development (USDT TRC-20):** `TDVbEdnpgNgoAhNcn1EwXxWHiR3RKLit5P` ([Verify on TronScan](https://tronscan.org/#/address/TDVbEdnpgNgoAhNcn1EwXxWHiR3RKLit5P))
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/docs/images/gui_parser.png" alt="Ozon SDK Pro Desktop GUI — Parser & Filters" width="820">
+</p>
 
 ---
 
@@ -205,23 +223,55 @@ tg.send_review_summary(summary)
 ---
 
 <a id="desktop-gui"></a>
-## 🖥️ Desktop GUI (`Ozon SDK Pro` — 7 Tabs)
+## 🖥️ Desktop GUI (`Ozon SDK Pro` — Standalone `.exe` + 7 Tabs)
 
+### 1. Download Standalone Windows App (No Python Required):
+1. Download **[OzonSDK_Pro_Windows_x64.zip](https://github.com/eminsk/ozon_parser/releases/latest)** from [Releases](https://github.com/eminsk/ozon_parser/releases).
+2. Unpack and launch `OzonSDK_Pro.exe` (includes bundled Chrome TLS `curl_cffi` and Free `g4f` AI engine out of the box!).
+
+### 2. Or Launch via Python / PyPI:
 Install `[gui]` (`uv add "ozon-sdk-pro[gui]"` or `uv sync --extra gui`) and run:
 
 ```bash
-uv run ozon-gui
+uvx --from "ozon-sdk-pro[gui]" ozon-gui
 # or from cloned repo:
 uv run python run_gui.py
+# or double-click run_gui.bat
 ```
 
 1. **🔍 Парсер**: Mixed Ozon targets (product URLs, SKUs, categories, seller storefronts, search keywords), price/discount/rating/keyword filters, seller INN lookup, `[browser]` fallback toggle, 24/7 loop.
 2. **📦 Каталог товаров**: Live cards with price, `💳 Ozon Карта`, price drop indicators (`📉`), seller + INN, *«Открыть на Ozon ↗»*, and 1-click Excel / CSV / JSON export.
 3. **📈 Позиции (Rank)**: Batch `SKU : keyword` scanning across pages `1..N`, sort selection, SQLite `▲`/`▼` deltas & Excel export.
 4. **💬 Умные отзывы + AI**: Extract paginated buyer reviews & pros/cons using **Offline**, **Free `g4f`**, **Local `Ollama`**, or **Paid APIs**, with built-in **`⚡ Проверить AI`**, **Excel export** (reviews + AI summary sheet), and **Telegram** send buttons.
-5. **🌐 Прокси и Сессия**: HTTP/SOCKS5 proxy, MobileProxy IP rotation URL, Cookies/User-Agent, 1-click **Chrome Cookie Capture (`[browser]`)**, and API Ping test.
-6. **✈️ Telegram**: Isolated Telegram SOCKS5/HTTP proxy alerts.
-7. **📋 Журнал**: Live execution log (auto-persists settings in `storage/gui_config.json`).
+5. **🌐 Прокси и Сессия**: HTTP/SOCKS5 proxy, **MobileProxy.rent 4G rotation URL/key** (with 1-click 3h Free Trial button), Cookies/User-Agent, 1-click **Chrome Cookie Capture (`[browser]`)**, and API Ping test.
+6. **✈️ Telegram & 📋 Журнал**: Isolated Telegram SOCKS5/HTTP proxy alerts, live execution log (`storage/gui_config.json`), and **`☕ Донат`** support dialog in the top bar.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/docs/images/gui_catalog.png" alt="Ozon SDK Pro Desktop GUI — Catalog Feed, Ozon Card & Seller INN" width="820">
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/docs/images/gui_reviews_ai.png" alt="Ozon SDK Pro Desktop GUI — Smart Reviews & Free/Paid AI Engine" width="820">
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/docs/images/gui_proxy.png" alt="Ozon SDK Pro Desktop GUI — Proxy, MobileProxy & Cookie Capture" width="820">
+</p>
+
+---
+
+## 🌐 Choosing & Configuring Proxies
+
+* **Static Server IPv4 / SOCKS5 (~$0.50/mo):** Suitable for light single-worker tasks alongside captured browser cookies (`--cookies` or `[browser]`).
+* **Pay-As-You-Go Mobile Proxies (~$2.50/GB):** [AstroProxy](https://astroproxy.com) or [Asocks](https://asocks.com) — billed only for compact Composer JSON payloads.
+* **Dedicated 4G/LTE Modems with Instant IP Rotation (Recommended):** [MobileProxy.rent / MobileProxy.space](https://mobileproxy.rent/?p=279117) ([Claim Free 3-Hour Trial](https://mobileproxy.rent/user.html?free&p=279117)):
+  ```python
+  from ozon_parser import OzonClient
+
+  with OzonClient(
+      proxy="http://login:password@proxy-domain.space:port",
+      mobileproxy_key="YOUR_ROTATION_KEY",  # expands to changeip.mobileproxy.space automatically
+  ) as ozon:
+      products = ozon.search("видеокарта rtx 4060", max_pages=2)
+  ```
 
 ---
 
@@ -278,6 +328,15 @@ Tools: `ozon_get_card`, `ozon_get_seller`, `ozon_search`, `ozon_get_seller_catal
 uv sync --all-extras
 uv run --with pytest pytest -v
 ```
+
+**24 tests passing** across **18 Python runtimes** in CI on **Linux, Windows & macOS** (CPython 3.8–3.16, Free-Threaded 3.13t–3.16t, PyPy 3.8–3.12).
+
+## ☕ Support & Donations
+
+If `ozon-sdk-pro` helps automate your analytics or saves development time:
+* ⭐ Star the repository on [GitHub](https://github.com/eminsk/ozon_parser)
+* 🌐 Use our partner link for [3-Hour Free Mobile Proxy Trial (No VPN)](https://mobileproxy.rent/user.html?free&p=279117)
+* 💎 **USDT (TRC-20):** `TDVbEdnpgNgoAhNcn1EwXxWHiR3RKLit5P` ([Verify on TronScan](https://tronscan.org/#/address/TDVbEdnpgNgoAhNcn1EwXxWHiR3RKLit5P))
 
 ## 📄 License
 

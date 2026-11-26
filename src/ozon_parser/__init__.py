@@ -17,7 +17,7 @@ Supports CPython 3.8-3.16, PyPy 3.8-3.12, and Free-Threaded No-GIL (3.13t-3.16t)
 
 from __future__ import annotations
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 from ozon_parser.ai import (
     AI_PROVIDER_PRESETS,
@@ -34,7 +34,16 @@ from ozon_parser.ai import (
     test_ai_provider,
 )
 from ozon_parser.client import AsyncOzonClient, OzonClient, ParseOzon, filter_products
-from ozon_parser.config import OzonConfig, REVIEW_SORT_OPTIONS, SORT_OPTIONS
+from ozon_parser.config import (
+    DONATE_TRONSCAN_URL,
+    DONATE_USDT_TRC20,
+    MOBILEPROXY_FREE_TRIAL_URL,
+    MOBILEPROXY_REFERRAL_URL,
+    OzonConfig,
+    REVIEW_SORT_OPTIONS,
+    SORT_OPTIONS,
+    resolve_proxy_change_url,
+)
 from ozon_parser.endpoints import (
     category_api_url,
     classify_target,
@@ -86,7 +95,11 @@ __all__ = [
     "AIProviderInfo",
     "AIProviderResult",
     "AsyncOzonClient",
+    "DONATE_TRONSCAN_URL",
+    "DONATE_USDT_TRC20",
     "FREE_G4F_CANDIDATES",
+    "MOBILEPROXY_FREE_TRIAL_URL",
+    "MOBILEPROXY_REFERRAL_URL",
     "OzonAntiBotError",
     "OzonClient",
     "OzonConfig",
@@ -123,6 +136,7 @@ __all__ = [
     "product_page_url",
     "quick_scan_ai_providers",
     "rank_results_to_excel",
+    "resolve_proxy_change_url",
     "reviews_api_url",
     "reviews_to_excel",
     "search_api_url",

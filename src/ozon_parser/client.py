@@ -9,6 +9,7 @@ import logging
 from pathlib import Path
 from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence, Tuple, Union
 
+from ozon_parser.config import resolve_proxy_change_url
 from ozon_parser.endpoints import (
     category_api_url,
     classify_target,
@@ -93,6 +94,7 @@ class OzonClient:
         *,
         proxy: Optional[str] = None,
         proxy_change_url: Optional[str] = None,
+        mobileproxy_key: Optional[str] = None,
         cookies: Optional[str] = None,
         user_agent: Optional[str] = None,
         timeout: float = 15.0,
@@ -103,9 +105,10 @@ class OzonClient:
         tracker_db: Optional[Union[str, Path]] = None,
         transport: Optional[SyncOzonTransport] = None,
     ) -> None:
+        resolved_change_url = resolve_proxy_change_url(proxy_change_url, mobileproxy_key)
         self.transport = transport or SyncOzonTransport(
             proxy=proxy,
-            proxy_change_url=proxy_change_url,
+            proxy_change_url=resolved_change_url,
             cookies=cookies,
             user_agent=user_agent,
             timeout=timeout,
@@ -472,6 +475,7 @@ class AsyncOzonClient:
         *,
         proxy: Optional[str] = None,
         proxy_change_url: Optional[str] = None,
+        mobileproxy_key: Optional[str] = None,
         cookies: Optional[str] = None,
         user_agent: Optional[str] = None,
         timeout: float = 15.0,
@@ -481,9 +485,10 @@ class AsyncOzonClient:
         tracker_db: Optional[Union[str, Path]] = None,
         transport: Optional[AsyncOzonTransport] = None,
     ) -> None:
+        resolved_change_url = resolve_proxy_change_url(proxy_change_url, mobileproxy_key)
         self.transport = transport or AsyncOzonTransport(
             proxy=proxy,
-            proxy_change_url=proxy_change_url,
+            proxy_change_url=resolved_change_url,
             cookies=cookies,
             user_agent=user_agent,
             timeout=timeout,
