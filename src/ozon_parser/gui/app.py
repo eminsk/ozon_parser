@@ -52,7 +52,7 @@ from ozon_parser.export import rank_results_to_excel, reviews_to_excel, to_csv, 
 from ozon_parser.http import CURL_CFFI_AVAILABLE
 from ozon_parser.models import OzonProduct, OzonReviewSummary
 from ozon_parser.rank import OzonRankTracker, RankResult
-from ozon_parser.telegram import TelegramNotifier
+from ozon_parser.telegram import OzonTelegramBot, TelegramNotifier
 
 logger = logging.getLogger("ozon_parser.gui")
 
@@ -212,6 +212,8 @@ class OzonGUIApp:
         self.discovered_items: List[OzonProduct] = []
         self.rank_results: List[RankResult] = []
         self.last_review_summary: Optional[OzonReviewSummary] = None
+        self._tg_bot: Optional[OzonTelegramBot] = None
+        self._tg_bot_thread: Optional[threading.Thread] = None
         self.stats_found = 0
         self.stats_discounts = 0
         self.stats_checks = 0
@@ -473,9 +475,14 @@ class OzonGUIApp:
         bar.pack(fill="x", padx=10, pady=(10, 6))
 
         ctk.CTkButton(
-            bar, text="📊 Excel (.xlsx)", width=155, fg_color="#16a34a", hover_color="#15803d",
+            bar, text="📊 Excel (.xlsx)", width=150, fg_color="#16a34a", hover_color="#15803d",
             font=ctk.CTkFont(size=12, weight="bold"), command=self._export_excel
         ).pack(side="left", padx=8, pady=8)
+
+        ctk.CTkButton(
+            bar, text="✈ Excel → TG", width=125, fg_color="#0284c7", hover_color="#0369a1",
+            font=ctk.CTkFont(size=12, weight="bold"), command=self._send_catalog_excel_tg
+        ).pack(side="left", padx=4, pady=8)
 
         ctk.CTkButton(
             bar, text="📄 CSV", width=110, fg_color="#2563eb", hover_color="#1d4ed8", command=self._export_csv
@@ -534,6 +541,11 @@ class OzonGUIApp:
             left, text="📊 Экспорт позиций (.xlsx)", height=34, fg_color="#16a34a", hover_color="#15803d",
             command=self._export_rank_excel
         ).pack(fill="x", padx=12, pady=4)
+
+        ctk.CTkButton(
+            left, text="✈ Позиции (.xlsx) → TG", height=34, fg_color="#0284c7", hover_color="#0369a1",
+            command=self._send_rank_excel_tg
+        ).pack(fill="x", padx=12, pady=(2, 4))
 
         self.rank_scroll = ctk.CTkScrollableFrame(self.tab_rank, fg_color="#0f172a", corner_radius=8)
         self.rank_scroll.pack(side="right", fill="both", expand=True, padx=(6, 10), pady=10)
@@ -778,11 +790,52 @@ class OzonGUIApp:
 
         self.var_tg_notify = ctk.BooleanVar(value=False)
         ctk.CTkCheckBox(frame, text="Отправлять найденные товары в Telegram", variable=self.var_tg_notify).pack(
-            anchor="w", padx=16, pady=12
+            anchor="w", padx=16, pady=10
         )
+
+        btn_row = ctk.CTkFrame(frame, fg_color="transparent")
+        btn_row.pack(fill="x", padx=16, pady=(2, 12))
         ctk.CTkButton(
-            frame, text="✈ Тест Telegram", width=200, fg_color="#0284c7", command=self._test_telegram
-        ).pack(anchor="w", padx=16, pady=6)
+            btn_row, text="✈ Тест Telegram", width=200, fg_color="#0284c7", command=self._test_telegram
+        ).pack(side="left")
+        self._make_link_button(
+            btn_row, text="📢 Канал @avito_sdk_pro", url=TELEGRAM_CHANNEL_URL, width=190,
+            fg_color="#1e293b", hover_color="#334155"
+        ).pack(side="left", padx=10)
+
+        bot_box = ctk.CTkFrame(frame, fg_color="#111c33", corner_radius=8)
+        bot_box.pack(fill="x", padx=16, pady=(8, 12))
+        ctk.CTkLabel(
+            bot_box,
+            text="🤖 Интерактивный Telegram-бот (OzonTelegramBot Polling + прогресс-бар + Excel .xlsx в чат):",
+            font=ctk.CTkFont(size=13, weight="bold"),
+            text_color="#38bdf8",
+        ).pack(anchor="w", padx=14, pady=(12, 4))
+        ctk.CTkLabel(
+            bot_box,
+            text="Команды: /start, /search <запрос или URL>, /drops, /rank <SKU> <запрос>, /reviews <SKU>, /seller <ID>, /workers, /limit, /proxy",
+            font=ctk.CTkFont(size=11),
+            text_color="#94a3b8",
+            wraplength=980,
+            justify="left",
+        ).pack(anchor="w", padx=14, pady=(0, 8))
+
+        bot_ctrl = ctk.CTkFrame(bot_box, fg_color="transparent")
+        bot_ctrl.pack(fill="x", padx=14, pady=(0, 12))
+        self.btn_tg_bot = ctk.CTkButton(
+            bot_ctrl,
+            text="🤖 Запустить Telegram-бота",
+            width=220,
+            fg_color="#16a34a",
+            hover_color="#15803d",
+            font=ctk.CTkFont(size=12, weight="bold"),
+            command=self._toggle_telegram_bot,
+        )
+        self.btn_tg_bot.pack(side="left")
+        self.lbl_tg_bot_status = ctk.CTkLabel(
+            bot_ctrl, text="● Остановлен", font=ctk.CTkFont(size=12, weight="bold"), text_color="#94a3b8"
+        )
+        self.lbl_tg_bot_status.pack(side="left", padx=14)
 
     def _build_logs_tab(self) -> None:
         self.txt_logs = ctk.CTkTextbox(self.tab_logs, font=ctk.CTkFont(family="Consolas", size=12), fg_color="#0f172a")
@@ -1193,10 +1246,121 @@ class OzonGUIApp:
         if not cfg.tg_token or not cfg.tg_chat_id:
             self._log("[!] Настройте Telegram Bot Token и Chat ID во вкладке Telegram.")
             return
-        ok = TelegramNotifier(cfg.tg_token, cfg.tg_chat_id, proxy=cfg.tg_proxy or None).send_review_summary(
-            self.last_review_summary
+        summary = self.last_review_summary
+
+        def worker() -> None:
+            notifier = TelegramNotifier(cfg.tg_token, cfg.tg_chat_id, proxy=cfg.tg_proxy or None)
+            ok_msg = notifier.send_review_summary(summary)
+            reports_dir = _get_base_dir() / "storage" / "reports"
+            reports_dir.mkdir(parents=True, exist_ok=True)
+            xlsx = reviews_to_excel(summary, reports_dir / f"ozon_reviews_{summary.sku}.xlsx")
+            ok_doc = notifier.send_excel(xlsx, caption=f"💬 Отзывы Ozon SKU {summary.sku} (⭐ {summary.avg_rating})")
+            self._log(
+                "Сводка и Excel отзывов отправлены в Telegram!"
+                if (ok_msg or ok_doc)
+                else "[!] Не удалось отправить сводку в Telegram."
+            )
+
+        threading.Thread(target=worker, daemon=True).start()
+
+    def _upload_excel_tg(self, filename: str, writer: Any, caption: str) -> None:
+        cfg = self._save_ui_to_config()
+        if not cfg.tg_token or not cfg.tg_chat_id:
+            self._log("[!] Настройте Telegram Bot Token и Chat ID во вкладке Telegram.")
+            return
+
+        def worker() -> None:
+            try:
+                reports_dir = _get_base_dir() / "storage" / "reports"
+                reports_dir.mkdir(parents=True, exist_ok=True)
+                out_path = reports_dir / filename
+                writer(out_path)
+                ok = TelegramNotifier(cfg.tg_token, cfg.tg_chat_id, proxy=cfg.tg_proxy or None).send_excel(
+                    out_path, caption=caption
+                )
+                self._log(
+                    f"Отправлено в Telegram: {out_path.name}" if ok else "[!] Ошибка загрузки Excel в Telegram."
+                )
+            except Exception as exc:
+                self._log(f"[!] Ошибка отправки Excel в TG: {exc}")
+
+        threading.Thread(target=worker, daemon=True).start()
+
+    def _send_catalog_excel_tg(self) -> None:
+        if not self.discovered_items:
+            self._log("Нет данных каталога Ozon для отправки в Telegram.")
+            return
+        stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        items = list(self.discovered_items)
+        self._upload_excel_tg(
+            f"ozon_catalog_{stamp}.xlsx",
+            lambda p: to_excel(items, p),
+            f"📊 Ozon Каталог Excel ({len(items)} товаров)",
         )
-        self._log("Сводка отзывов отправлена в Telegram!" if ok else "[!] Не удалось отправить сводку в Telegram.")
+
+    def _send_rank_excel_tg(self) -> None:
+        if not self.rank_results:
+            self._log("Нет результатов позиций Ozon для отправки в Telegram.")
+            return
+        stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        res = list(self.rank_results)
+        self._upload_excel_tg(
+            f"ozon_rank_{stamp}.xlsx",
+            lambda p: rank_results_to_excel(res, p),
+            f"📈 Позиции Ozon Excel ({len(res)} проверок)",
+        )
+
+    def _toggle_telegram_bot(self) -> None:
+        if self._tg_bot is not None and self._tg_bot_thread is not None and self._tg_bot_thread.is_alive():
+            self._tg_bot.stop()
+            self._tg_bot = None
+            self.btn_tg_bot.configure(text="🤖 Запустить Telegram-бота", fg_color="#16a34a", hover_color="#15803d")
+            self.lbl_tg_bot_status.configure(text="● Остановлен", text_color="#94a3b8")
+            self._log("OzonTelegramBot остановлен пользователем.")
+            return
+
+        cfg = self._save_ui_to_config()
+        if not cfg.tg_token:
+            self._log("[!] Укажите Telegram Bot Token во вкладке Telegram.")
+            return
+
+        bot = OzonTelegramBot(
+            bot_token=cfg.tg_token,
+            proxy=cfg.proxy_string or None,
+            proxy_change_url=resolve_proxy_change_url(cfg.proxy_change_url),
+            tg_proxy=cfg.tg_proxy or None,
+            channel_id=cfg.tg_chat_id or None,
+            limit=cfg.limit,
+            max_pages=cfg.max_pages,
+            with_seller=cfg.with_seller,
+            cookies=cfg.cookies or None,
+            user_agent=cfg.user_agent or None,
+            use_browser_fallback=cfg.use_browser_fallback,
+            tracker_db=str(_get_base_dir() / "storage" / "ozon_prices.db"),
+        )
+        self._tg_bot = bot
+        self.btn_tg_bot.configure(text="⏹ Остановить бота", fg_color="#dc2626", hover_color="#b91c1c")
+        self.lbl_tg_bot_status.configure(text="● Polling активен (/start в TG)", text_color="#4ade80")
+        self._log("Запущен интерактивный OzonTelegramBot (long-polling)...")
+
+        def run_bot() -> None:
+            try:
+                bot.run_polling(lock=False)
+            except Exception as exc:
+                self._log(f"[!] OzonTelegramBot завершился с ошибкой: {exc}")
+            finally:
+                self.root.after(
+                    0,
+                    lambda: (
+                        self.btn_tg_bot.configure(
+                            text="🤖 Запустить Telegram-бота", fg_color="#16a34a", hover_color="#15803d"
+                        ),
+                        self.lbl_tg_bot_status.configure(text="● Остановлен", text_color="#94a3b8"),
+                    ),
+                )
+
+        self._tg_bot_thread = threading.Thread(target=run_bot, daemon=True)
+        self._tg_bot_thread.start()
 
     def _test_proxy_connectivity(self) -> None:
         cfg = self._save_ui_to_config()
@@ -1344,6 +1508,8 @@ class OzonGUIApp:
 
     def _on_close(self) -> None:
         self.stop_event.set()
+        if self._tg_bot is not None:
+            self._tg_bot.stop()
         self._save_ui_to_config()
         self.root.destroy()
 

@@ -132,6 +132,7 @@ class BaseOzonTransport:
         self.impersonate = impersonate
         self.use_browser_fallback = bool(use_browser_fallback)
         self.browser_headless = bool(browser_headless)
+        self.ip_rotations: int = 0
 
     def build_headers(self, extra: Optional[Dict[str, str]] = None) -> Dict[str, str]:
         headers = dict(DEFAULT_HEADERS)
@@ -273,6 +274,8 @@ class SyncOzonTransport(BaseOzonTransport):
                     status_code = std_requests.get(self.proxy_change_url, timeout=8.0).status_code
                 else:
                     return False
+                if status_code < 400:
+                    self.ip_rotations += 1
                 logger.info(f"Proxy IP rotation requested: HTTP {status_code}")
                 time.sleep(2.0)
                 return status_code < 400

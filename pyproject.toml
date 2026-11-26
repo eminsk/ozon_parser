@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ozon-sdk-pro"
-version = "1.1.0"
-description = "All-in-One Ozon Sync/Async SDK, CLI, Native MCP Server, Free/Paid AI (g4f, Ollama, OpenAI, DeepSeek, OpenRouter) & optional CustomTkinter Desktop GUI ([gui]): Composer API extraction, Seller INN lookup, Ozon Card pricing, Search Rank Tracker, and Smart Reviews"
+version = "1.2.0"
+description = "All-in-One Ozon Sync/Async SDK, Interactive Telegram Bot (OzonTelegramBot), 14-command CLI, 9-tool MCP Server, Free/Paid AI (g4f, Ollama, OpenAI, DeepSeek, OpenRouter) & Desktop GUI ([gui] / Windows .exe): Composer API, Seller INN lookup, Ozon Card pricing, Search Rank Tracker, Smart Reviews & Excel reports"
 readme = "README.md"
 authors = [
     { name = "eminsk", email = "M_N_Nik@yahoo.com" },

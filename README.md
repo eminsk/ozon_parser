@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">Ozon SDK Pro (`ozon-sdk-pro`)</h1>
 <p align="center">
-  <b>All-in-One Ozon Sync/Async SDK + Standalone Windows .exe GUI + Composer API + Seller INN Lookup + Ozon Card + Rank Tracker + Smart Reviews + Free/Paid AI (g4f / Ollama / OpenAI / DeepSeek / OpenRouter) + 13 CLI Commands + 9 MCP Tools</b>
+  <b>All-in-One Ozon Sync/Async SDK + Interactive Telegram Bot (`OzonTelegramBot`) + Standalone Windows .exe GUI + Composer API + Seller INN Lookup + Ozon Card + Rank Tracker + Smart Reviews + Free/Paid AI (`g4f` / Ollama / OpenAI / DeepSeek / OpenRouter) + 14 CLI Commands + 9 MCP Tools</b>
 </p>
 
 <p align="center">
@@ -11,18 +11,18 @@
   <a href="https://github.com/eminsk/ozon_parser/blob/main/README_RU.md">🇷🇺 Документация на русском</a>
 </p>
 
-[![Release](https://img.shields.io/badge/release-v1.1.0-005BFF.svg?style=flat&logo=github)](https://github.com/eminsk/ozon_parser/releases/tag/v1.1.0)
+[![Release](https://img.shields.io/badge/release-v1.2.0-005BFF.svg?style=flat&logo=github)](https://github.com/eminsk/ozon_parser/releases/tag/v1.2.0)
 [![Free 3h Proxy Trial](https://img.shields.io/badge/Mobile_Proxy-Free_3h_Trial_(No_VPN)-00C853?style=flat&logo=cloudflare&logoColor=white)](https://mobileproxy.rent/user.html?free&p=279117)
 [![PyPI Version](https://img.shields.io/pypi/v/ozon-sdk-pro.svg?style=flat&logo=pypi&color=005BFF)](https://pypi.org/project/ozon-sdk-pro/)
 [![Python Versions](https://img.shields.io/badge/python-3.8%20--%203.16+%20%7C%20PyPy%20%7C%20No--GIL-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![uv Powered](https://img.shields.io/badge/uv-package%20manager-DE5FE9.svg?style=flat)](https://github.com/astral-sh/uv)
-[![Tests](https://img.shields.io/badge/pytest-24%20passed%20%C3%97%2018%20runtimes-2ea44f.svg?style=flat&logo=pytest&logoColor=white)](https://github.com/eminsk/ozon_parser/tree/main/tests)
+[![Tests](https://img.shields.io/badge/pytest-29%20passed%20%C3%97%2018%20runtimes-2ea44f.svg?style=flat&logo=pytest&logoColor=white)](https://github.com/eminsk/ozon_parser/tree/main/tests)
 [![Desktop GUI](https://img.shields.io/badge/Desktop%20GUI-Windows%20.exe%20%7C%207%20Tabs-005BFF.svg?style=flat)](https://github.com/eminsk/ozon_parser#desktop-gui)
 [![MCP Server](https://img.shields.io/badge/MCP-9%20Tools%20JSON--RPC%202.0-00C853.svg?style=flat)](https://github.com/eminsk/ozon_parser#mcp-server-for-ai-agents)
 [![Telegram Channel](https://img.shields.io/badge/Telegram_Channel-@avito__sdk__pro-26A5E4?style=flat&logo=telegram&logoColor=white)](https://t.me/avito_sdk_pro)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat)](https://opensource.org/licenses/MIT)
 
-> **Unified Ozon Ecosystem (`ozon-sdk-pro` / `import ozon_parser`)** combining fast HTTP/Composer API v2 extraction, seller legal & INN lookups, buyer review harvesting & **Free/Paid AI summarization (`g4f`, Ollama, OpenAI, DeepSeek, OpenRouter, ProxyAPI, Groq, Gemini)**, Ozon Card savings math, SQLite price & search rank tracking, 13-command CLI (`ozon-parser` / `ozon-sdk`), 9-tool MCP Server (`ozon-mcp`), 7-tab CustomTkinter Desktop GUI (`ozon-gui`), **Standalone Windows `x64` `.exe` App (`OzonSDK_Pro.exe`)**, Debian APT PPA packaging, and a `conda-forge` v1 recipe.
+> **Unified Ozon Ecosystem (`ozon-sdk-pro` / `import ozon_parser`)** combining fast HTTP/Composer API v2 extraction, seller legal & INN lookups, buyer review harvesting & **Free/Paid AI summarization (`g4f`, Ollama, OpenAI, DeepSeek, OpenRouter, ProxyAPI, Groq, Gemini)**, Ozon Card savings math, SQLite price & search rank tracking, **Interactive Telegram Bot (`OzonTelegramBot`)**, 14-command CLI (`ozon-parser` / `ozon-sdk`), 9-tool MCP Server (`ozon-mcp`), 7-tab CustomTkinter Desktop GUI (`ozon-gui`), **Standalone Windows `x64` `.exe` App (`OzonSDK_Pro.exe`)**, Debian APT PPA packaging, and a `conda-forge` v1 recipe.
 
 > ### 🤝 Community, Mobile Proxies & Support
 > - 🌐 **Hitting Ozon anti-bot challenges or 429 limits?** Claim a [3-Hour Free Mobile Proxy Trial](https://mobileproxy.rent/user.html?free&p=279117) ([MobileProxy Portal](https://mobileproxy.rent/?p=279117) — works in Russia without VPN).
@@ -58,8 +58,8 @@ Core HTTP transport selects **`curl_cffi` (`[tls]`) → `httpx[http2]` → `requ
 | **Sync & Async Clients** (`OzonClient`, `AsyncOzonClient`, `ParseOzon`) | High-throughput batch scraping, category/search pagination & one-liner exports | `filter_products` (price/discount/rating/whitelist/blacklist), `scrape_targets` for mixed lists, `OzonClient.card_savings()` for Ozon Card |
 | **Smart Reviews & Free/Paid AI** (`reviews.py`, `ai.py`) | Paginated `webListReviews` extraction + pros/cons clustering & LLM summarization | **Offline NLP** (ratings `1★–5★`, photos, replies, aspects), **Free `g4f`** (`Yqcloud`, `Airforce`, `LLM7`, `GLM`...) & **Ollama/LM Studio**, **Hybrid** (`OpenRouter` `:free`, `Groq`, `Gemini`), **Paid** (`OpenAI`, `DeepSeek`, `ProxyAPI`) + health checks (`test_ai_provider`, `quick_scan_ai_providers`) |
 | **Price & Rank Trackers** (`tracker.py`, `rank.py`) | Tracks regular & Ozon Card price drops + search position movement | Thread-safe SQLite (`ozon_latest_prices`, `ozon_price_history`, `ozon_rank_history`) with `▲`/`▼` deltas |
-| **Exports, Config & Alerts** (`export.py`, `config.py`, `telegram.py`) | Branded Excel spreadsheets, structured exports, TOML/JSON config & Telegram | `.xlsx` (products, reviews+AI tabs, rank reports), `.csv` (UTF-8 BOM + Excel formula guard), `.json`, `.jsonl`, `pandas.DataFrame` (`[dataframe]`), `TelegramNotifier` with separate proxy |
-| **Desktop GUI (`ozon-gui`)** | 7-tab dark `CustomTkinter` control center (`[gui]`) | Parser, Catalog Feed, Search Rank Tracker, Smart Reviews + AI Health Check, Proxy/Cookie Capture (`[browser]`), Telegram, Logs |
+| **Exports, Config & Interactive Telegram Bot** (`export.py`, `config.py`, `telegram.py`) | Excel reports, TOML/JSON config & `OzonTelegramBot` | `.xlsx` (products, reviews+AI tabs, rank reports), `.csv` (UTF-8 BOM + Excel formula guard), `.json`, `.jsonl`, `pandas.DataFrame` (`[dataframe]`), `TelegramNotifier` + interactive **`OzonTelegramBot`** (`/search`, `/drops`, `/rank`, `/reviews`, `/seller`, live progress bars & auto Excel uploads via decoupled `tg_proxy`) |
+| **Desktop GUI (`ozon-gui`)** | 7-tab dark `CustomTkinter` control center (`[gui]`) | Parser, Catalog Feed + `✈ Excel → TG`, Search Rank Tracker + `✈ Excel → TG`, Smart Reviews + AI Check + `✈ В TG`, Proxy/Cookie Capture (`[browser]`), Telegram + Bot Start/Stop, Logs |
 | **Native MCP Server (`ozon-mcp`)** | Connects AI coding agents & assistants to Ozon market data | 9 JSON-RPC 2.0 tools (`2025-11-25` / `2025-06-18` / `2024-11-05`) |
 
 ---
@@ -69,7 +69,7 @@ Core HTTP transport selects **`curl_cffi` (`[tls]`) → `httpx[http2]` → `requ
 ### PyPI (`uv` / `pip`)
 
 ```bash
-# Core SDK, 13-command CLI (ozon-parser / ozon-sdk), and 9-tool MCP Server (ozon-mcp)
+# Core SDK, 14-command CLI (ozon-parser / ozon-sdk), and 9-tool MCP Server (ozon-mcp)
 uv add ozon-sdk-pro
 
 # Run Desktop GUI directly without installing into your project (requires [gui])
@@ -204,10 +204,10 @@ print(ai.chat("Дай 3 совета по увеличению конверси�
 
 Supported built-in AI presets: `g4f` (`Yqcloud`, `Airforce`, `LLM7`, `GLM`, `DeepInfra`, `Cerebras`, `Pollinations`...), `ollama` (`OLLAMA_BASE_URL`), `lmstudio` (`LMSTUDIO_BASE_URL`), `openrouter` (`OPENROUTER_API_KEY`), `groq` (`GROQ_API_KEY`), `gemini` (`GEMINI_API_KEY`), `openai` (`OPENAI_API_KEY`), `deepseek` (`DEEPSEEK_API_KEY`), `proxyapi` (`PROXYAPI_API_KEY`).
 
-### 4. Search Rank Tracking & Telegram Alerts
+### 4. Search Rank Tracking & Interactive Telegram Bot (`OzonTelegramBot`)
 
 ```python
-from ozon_parser import OzonClient, TelegramNotifier, rank_results_to_excel
+from ozon_parser import OzonClient, OzonTelegramBot, TelegramNotifier, rank_results_to_excel
 
 with OzonClient(cookies="...", tracker_db="ozon_prices.db") as ozon:
     rank = ozon.check_rank(1619925434, "видеокарта rtx 4060", max_pages=3)
@@ -218,6 +218,15 @@ with OzonClient(cookies="...", tracker_db="ozon_prices.db") as ozon:
 
 tg = TelegramNotifier(bot_token="...", chat_id="...", proxy="socks5://127.0.0.1:1080")
 tg.send_review_summary(summary)
+
+# Interactive polling bot (/start, /search, /drops, /rank, /reviews, /seller + Excel uploads):
+bot = OzonTelegramBot(
+    bot_token="123456789:AAF...",
+    proxy="http://login:password@proxy-domain.space:port",
+    mobileproxy_key="YOUR_MOBILEPROXY_KEY",
+    tg_proxy="socks5://127.0.0.1:1080",
+)
+# bot.run_polling()  # or run: uv run python run_telegram_bot.py / uv run ozon-parser bot --tg-token ...
 ```
 
 ---
@@ -240,11 +249,11 @@ uv run python run_gui.py
 ```
 
 1. **🔍 Парсер**: Mixed Ozon targets (product URLs, SKUs, categories, seller storefronts, search keywords), price/discount/rating/keyword filters, seller INN lookup, `[browser]` fallback toggle, 24/7 loop.
-2. **📦 Каталог товаров**: Live cards with price, `💳 Ozon Карта`, price drop indicators (`📉`), seller + INN, *«Открыть на Ozon ↗»*, and 1-click Excel / CSV / JSON export.
-3. **📈 Позиции (Rank)**: Batch `SKU : keyword` scanning across pages `1..N`, sort selection, SQLite `▲`/`▼` deltas & Excel export.
-4. **💬 Умные отзывы + AI**: Extract paginated buyer reviews & pros/cons using **Offline**, **Free `g4f`**, **Local `Ollama`**, or **Paid APIs**, with built-in **`⚡ Проверить AI`**, **Excel export** (reviews + AI summary sheet), and **Telegram** send buttons.
+2. **📦 Каталог товаров**: Live cards with price, `💳 Ozon Карта`, price drop indicators (`📉`), seller + INN, *«Открыть на Ozon ↗»*, and 1-click **Excel `.xlsx`**, **✈ Excel → TG**, **CSV**, and **JSON** export.
+3. **📈 Позиции (Rank)**: Batch `SKU : keyword` scanning across pages `1..N`, sort selection, SQLite `▲`/`▼` deltas, Excel export & **✈ Позиции → TG**.
+4. **💬 Умные отзывы + AI**: Extract paginated buyer reviews & pros/cons using **Offline**, **Free `g4f`**, **Local `Ollama`**, or **Paid APIs**, with built-in **`⚡ Проверить AI`**, **Excel export**, and **Telegram** summary + `.xlsx` upload button.
 5. **🌐 Прокси и Сессия**: HTTP/SOCKS5 proxy, **MobileProxy.rent 4G rotation URL/key** (with 1-click 3h Free Trial button), Cookies/User-Agent, 1-click **Chrome Cookie Capture (`[browser]`)**, and API Ping test.
-6. **✈️ Telegram & 📋 Журнал**: Isolated Telegram SOCKS5/HTTP proxy alerts, live execution log (`storage/gui_config.json`), and **`☕ Донат`** support dialog in the top bar.
+6. **✈️ Telegram & 📋 Журнал**: Isolated Telegram SOCKS5/HTTP proxy, **1-click interactive `🤖 Запустить Telegram-бота`** (`OzonTelegramBot` polling), live execution log (`storage/gui_config.json`), and **`☕ Донат`** support dialog in the top bar.
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/docs/images/gui_catalog.png" alt="Ozon SDK Pro Desktop GUI — Catalog Feed, Ozon Card & Seller INN" width="820">
@@ -275,7 +284,7 @@ uv run python run_gui.py
 
 ---
 
-## 💻 CLI Commands (`ozon-parser` / `ozon-sdk` — 13 Subcommands)
+## 💻 CLI Commands (`ozon-parser` / `ozon-sdk` — 14 Subcommands)
 
 ```bash
 uv run ozon-parser ping
@@ -294,6 +303,8 @@ uv run ozon-parser ai --ask "Выдели главные плюсы" --mode free
 uv run ozon-parser cookies --visible -o ozon_cookies.txt
 uv run ozon-parser mcp
 uv run ozon-parser gui
+uv run ozon-parser bot --tg-token "123:AAF..." --mobileproxy-key "KEY" --tg-proxy "socks5://127.0.0.1:1080"
+uv run ozon-parser search "ноутбук" -o search.xlsx --tg-token "123:AAF..." --tg-chat-id "999"
 ```
 
 ---
@@ -329,7 +340,7 @@ uv sync --all-extras
 uv run --with pytest pytest -v
 ```
 
-**24 tests passing** across **18 Python runtimes** in CI on **Linux, Windows & macOS** (CPython 3.8–3.16, Free-Threaded 3.13t–3.16t, PyPy 3.8–3.12).
+**29 tests passing** across **18 Python runtimes** in CI on **Linux, Windows & macOS** (CPython 3.8–3.16, Free-Threaded 3.13t–3.16t, PyPy 3.8–3.12), including `OzonTelegramBot` commands, callbacks, batch multi-URL scraping, Excel uploads, and `BotInstanceLock`.
 
 ## ☕ Support & Donations
 

@@ -22,12 +22,13 @@ from ozon_parser.export import (
     to_jsonl,
 )
 from ozon_parser.models import OzonProduct
+from ozon_parser.telegram import OzonTelegramBot, TelegramNotifier
 from ozon_parser.tracker import OzonPriceTracker
 
 
-def _export_results(products: List[OzonProduct], output_path: Optional[str]) -> None:
+def _export_results(products: List[OzonProduct], output_path: Optional[str]) -> Optional[Path]:
     if not output_path:
-        return
+        return None
     path = Path(output_path)
     ext = path.suffix.lower()
     if ext == ".xlsx":
@@ -39,6 +40,25 @@ def _export_results(products: List[OzonProduct], output_path: Optional[str]) -> 
     else:
         to_json(products, path)
     print(f"[+] Exported {len(products)} item(s) -> {path}")
+    return path
+
+
+def _add_tg_args(subparser: argparse.ArgumentParser) -> None:
+    subparser.add_argument("--tg-token", default=None, help="Optional Telegram Bot Token to send results/Excel")
+    subparser.add_argument("--tg-chat-id", default=None, help="Optional Telegram Chat or Channel ID")
+    subparser.add_argument("--tg-proxy", default=None, help="Optional separate SOCKS5/HTTP proxy for Telegram API")
+
+
+def _notify_cli_export(args: argparse.Namespace, products: List[OzonProduct], exported: Optional[Path], title: str) -> None:
+    token = getattr(args, "tg_token", None)
+    chat_id = getattr(args, "tg_chat_id", None)
+    if not (token and chat_id):
+        return
+    notifier = TelegramNotifier(token, chat_id, proxy=getattr(args, "tg_proxy", None))
+    if exported and exported.exists():
+        notifier.send_excel(exported, caption=f"📊 {title} ({len(products)} шт.)")
+    elif products:
+        notifier.notify_many(products[:5])
 
 
 def _print_products_table(products: List[OzonProduct]) -> None:
@@ -236,6 +256,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     seller_p.add_argument("--with-seller", action="store_true", help="Attach seller INN details to catalog rows")
     seller_p.add_argument("-o", "--output", help="Save catalog (.xlsx, .csv, .json, .jsonl)")
     _add_network_args(seller_p)
+    _add_tg_args(seller_p)
 
     # 4. search
     search_p = subparsers.add_parser("search", help="Search Ozon catalog")
@@ -250,6 +271,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     search_p.add_argument("--with-seller", action="store_true", help="Enrich items with seller modal metadata")
     search_p.add_argument("-o", "--output", help="Save output (.xlsx, .csv, .json, .jsonl)")
     _add_network_args(search_p)
+    _add_tg_args(search_p)
 
     # 5. category
     cat_p = subparsers.add_parser("category", help="Parse products from an Ozon category URL or /category/... path")
@@ -259,6 +281,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     cat_p.add_argument("--sort", default="score", help="Sort order")
     cat_p.add_argument("-o", "--output", help="Save output (.xlsx, .csv, .json, .jsonl)")
     _add_network_args(cat_p)
+    _add_tg_args(cat_p)
 
     # 6. reviews
     rev_p = subparsers.add_parser("reviews", help="Smart Review Analyzer (offline NLP, free g4f/Ollama, or paid LLM)")
@@ -330,6 +353,21 @@ def main(argv: Optional[List[str]] = None) -> int:
     # 13. gui
     subparsers.add_parser("gui", help="Launch Dark-Themed 7-Tab Ozon SDK Pro Desktop GUI (requires [gui] extra)")
 
+    # 14. bot
+    bot_p = subparsers.add_parser(
+        "bot",
+        help="Start interactive OzonTelegramBot with live progress bars, /drops, /rank, /reviews, /seller & Excel export",
+    )
+    bot_p.add_argument("--tg-token", default=None, help="Telegram Bot Token (or set OZON_TG_TOKEN env var)")
+    bot_p.add_argument("--tg-proxy", default=None, help="Optional SOCKS5/HTTP proxy for Telegram API (or OZON_TG_PROXY)")
+    bot_p.add_argument("--channel-id", default=None, help="Optional channel/chat ID for forwarding reports")
+    bot_p.add_argument("--workers", type=int, default=2, help="Parallel worker threads (1..16)")
+    bot_p.add_argument("-n", "--limit", type=int, default=50, help="Default max items per search (1..5000)")
+    bot_p.add_argument("-p", "--pages", type=int, default=2, help="Default search pages")
+    bot_p.add_argument("--sort", default="score", help="Default search sort order")
+    bot_p.add_argument("--no-seller", action="store_true", help="Disable seller legal/INN lookup during search")
+    _add_network_args(bot_p)
+
     args = parser.parse_args(argv)
     if not args.command:
         parser.print_help()
@@ -338,6 +376,33 @@ def main(argv: Optional[List[str]] = None) -> int:
     if args.command == "gui":
         from ozon_parser.gui import main_gui
         return main_gui()
+
+    if args.command == "bot":
+        import os
+
+        token = (args.tg_token or os.getenv("OZON_TG_TOKEN", "")).strip()
+        if not token:
+            print("Error: --tg-token or OZON_TG_TOKEN environment variable is required.", file=sys.stderr)
+            return 1
+        bot = OzonTelegramBot(
+            bot_token=token,
+            proxy=args.proxy,
+            proxy_change_url=args.proxy_change_url,
+            mobileproxy_key=args.mobileproxy_key,
+            tg_proxy=args.tg_proxy or os.getenv("OZON_TG_PROXY"),
+            channel_id=args.channel_id or os.getenv("OZON_TG_CHANNEL"),
+            workers=args.workers,
+            limit=args.limit,
+            max_pages=args.pages,
+            sort=args.sort,
+            with_seller=not args.no_seller,
+            cookies=args.cookies,
+            user_agent=args.user_agent,
+            use_browser_fallback=bool(args.browser),
+            tracker_db=args.db or "ozon_prices.db",
+        )
+        bot.run_polling()
+        return 0
 
     if args.command == "mcp":
         from ozon_parser.mcp_server import OzonMCPServer
@@ -405,7 +470,8 @@ def main(argv: Optional[List[str]] = None) -> int:
                 with_seller=args.with_seller,
             )
             _print_products_table(products)
-            _export_results(products, args.output)
+            exported = _export_results(products, args.output)
+            _notify_cli_export(args, products, exported, f"Ozon Продавец {args.target}")
             return 0
 
         if args.command == "search":
@@ -424,7 +490,8 @@ def main(argv: Optional[List[str]] = None) -> int:
                 min_rating=args.min_rating,
             )
             _print_products_table(products)
-            _export_results(products, args.output)
+            exported = _export_results(products, args.output)
+            _notify_cli_export(args, products, exported, f"Ozon Поиск: {args.query}")
             return 0
 
         if args.command == "category":
@@ -435,7 +502,8 @@ def main(argv: Optional[List[str]] = None) -> int:
                 sort=args.sort,
             )
             _print_products_table(products)
-            _export_results(products, args.output)
+            exported = _export_results(products, args.output)
+            _notify_cli_export(args, products, exported, f"Ozon Категория {args.target}")
             return 0
 
         if args.command == "reviews":

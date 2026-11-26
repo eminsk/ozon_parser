@@ -17,7 +17,7 @@ Supports CPython 3.8-3.16, PyPy 3.8-3.12, and Free-Threaded No-GIL (3.13t-3.16t)
 
 from __future__ import annotations
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 from ozon_parser.ai import (
     AI_PROVIDER_PRESETS,
@@ -84,7 +84,15 @@ from ozon_parser.models import (
 )
 from ozon_parser.rank import OzonRankTracker, RankResult
 from ozon_parser.reviews import SmartOzonReviewAnalyzer
-from ozon_parser.telegram import TelegramNotifier
+from ozon_parser.telegram import (
+    BotInstanceLock,
+    OzonTelegramBot,
+    TelegramNotifier,
+    mask_proxy_url,
+    normalize_tg_proxy,
+    render_progress_bar,
+    render_telegram_progress_bar,
+)
 from ozon_parser.tracker import OzonPriceTracker
 
 __all__ = [
@@ -95,6 +103,7 @@ __all__ = [
     "AIProviderInfo",
     "AIProviderResult",
     "AsyncOzonClient",
+    "BotInstanceLock",
     "DONATE_TRONSCAN_URL",
     "DONATE_USDT_TRC20",
     "FREE_G4F_CANDIDATES",
@@ -112,6 +121,7 @@ __all__ = [
     "OzonRateLimitError",
     "OzonReviewItem",
     "OzonReviewSummary",
+    "OzonTelegramBot",
     "OzonValidationError",
     "ParseOzon",
     "PriceRecord",
@@ -131,11 +141,15 @@ __all__ = [
     "generate_completion",
     "is_g4f_available",
     "list_ai_providers",
+    "mask_proxy_url",
+    "normalize_tg_proxy",
     "parse_price_number",
     "product_api_url",
     "product_page_url",
     "quick_scan_ai_providers",
     "rank_results_to_excel",
+    "render_progress_bar",
+    "render_telegram_progress_bar",
     "resolve_proxy_change_url",
     "reviews_api_url",
     "reviews_to_excel",
