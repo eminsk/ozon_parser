@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/assets/logo.png" width="140" alt="Ozon SDK Pro Logo">
+  <img src="assets/logo.png" width="140" alt="Ozon SDK Pro Logo">
 </p>
 <h1 align="center">Ozon SDK Pro (`ozon-sdk-pro`)</h1>
 <p align="center">
@@ -32,7 +32,7 @@
 > - ☕ **Support development (USDT TRC-20):** `TDVbEdnpgNgoAhNcn1EwXxWHiR3RKLit5P` ([Verify on TronScan](https://tronscan.org/#/address/TDVbEdnpgNgoAhNcn1EwXxWHiR3RKLit5P))
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/docs/images/gui_parser.png" alt="Ozon SDK Pro Desktop GUI — Parser & Filters" width="820">
+  <img src="docs/images/gui_parser.png" alt="Ozon SDK Pro Desktop GUI — Parser & Filters" width="820">
 </p>
 
 ---
@@ -256,13 +256,16 @@ uv run python run_gui.py
 6. **✈️ Telegram & 📋 Журнал**: Isolated Telegram SOCKS5/HTTP proxy, **1-click interactive `🤖 Запустить Telegram-бота`** (`OzonTelegramBot` polling), live execution log (`storage/gui_config.json`), and **`☕ Донат`** support dialog in the top bar.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/docs/images/gui_catalog.png" alt="Ozon SDK Pro Desktop GUI — Catalog Feed, Ozon Card & Seller INN" width="820">
+  <img src="docs/images/gui_catalog.png" alt="Ozon SDK Pro Desktop GUI — Catalog Feed, Ozon Card & Seller INN" width="820">
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/docs/images/gui_reviews_ai.png" alt="Ozon SDK Pro Desktop GUI — Smart Reviews & Free/Paid AI Engine" width="820">
+  <img src="docs/images/gui_reviews_ai.png" alt="Ozon SDK Pro Desktop GUI — Smart Reviews & Free/Paid AI Engine" width="820">
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/docs/images/gui_proxy.png" alt="Ozon SDK Pro Desktop GUI — Proxy, MobileProxy & Cookie Capture" width="820">
+  <img src="docs/images/gui_telegram.png" alt="Ozon SDK Pro Desktop GUI — Interactive Telegram Bot & Alerts" width="820">
+</p>
+<p align="center">
+  <img src="docs/images/gui_proxy.png" alt="Ozon SDK Pro Desktop GUI — Proxy, MobileProxy & Cookie Capture" width="820">
 </p>
 
 ---

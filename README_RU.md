@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/assets/logo.png" width="140" alt="Ozon SDK Pro Logo">
+  <img src="assets/logo.png" width="140" alt="Ozon SDK Pro Logo">
 </p>
 <h1 align="center">Ozon SDK Pro (`ozon-sdk-pro`)</h1>
 <p align="center">
@@ -29,7 +29,7 @@
 > - ☕ **Поддержать разработку (USDT TRC-20):** `TDVbEdnpgNgoAhNcn1EwXxWHiR3RKLit5P` ([Проверить в TronScan](https://tronscan.org/#/address/TDVbEdnpgNgoAhNcn1EwXxWHiR3RKLit5P))
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/docs/images/gui_parser.png" alt="Ozon SDK Pro Desktop GUI — Вкладка Парсер" width="820">
+  <img src="docs/images/gui_parser.png" alt="Ozon SDK Pro Desktop GUI — Вкладка Парсер" width="820">
 </p>
 
 ---
@@ -160,13 +160,16 @@ uv run python run_gui.py
 Вкладки GUI: **🔍 Парсер**, **📦 Каталог товаров** (+ **✈ Excel → TG**), **📈 Позиции (Rank)** (+ **✈ Позиции → TG**), **💬 Умные отзывы + AI** (кнопка **`⚡ Проверить AI`**, экспорт отзывов в `.xlsx` и отправка в Telegram), **🌐 Прокси и Сессия** (баннер **MobileProxy + 3ч тест** и **`🍪 Захватить Cookies`**), **✈️ Telegram** (**запуск интерактивного `OzonTelegramBot` одной кнопкой**), **📋 Журнал** и **`☕ Донат`** в шапке окна.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/docs/images/gui_catalog.png" alt="Ozon SDK Pro Desktop GUI — Каталог товаров, Ozon Карта и ИНН" width="820">
+  <img src="docs/images/gui_catalog.png" alt="Ozon SDK Pro Desktop GUI — Каталог товаров, Ozon Карта и ИНН" width="820">
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/docs/images/gui_reviews_ai.png" alt="Ozon SDK Pro Desktop GUI — Умные отзывы и бесплатный AI g4f" width="820">
+  <img src="docs/images/gui_reviews_ai.png" alt="Ozon SDK Pro Desktop GUI — Умные отзывы и бесплатный AI g4f" width="820">
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/eminsk/ozon_parser/main/docs/images/gui_proxy.png" alt="Ozon SDK Pro Desktop GUI — Прокси, MobileProxy и захват Cookies" width="820">
+  <img src="docs/images/gui_telegram.png" alt="Ozon SDK Pro Desktop GUI — Интерактивный Telegram-бот" width="820">
+</p>
+<p align="center">
+  <img src="docs/images/gui_proxy.png" alt="Ozon SDK Pro Desktop GUI — Прокси, MobileProxy и захват Cookies" width="820">
 </p>
 
 ### Выбор и настройка сетевых прокси
